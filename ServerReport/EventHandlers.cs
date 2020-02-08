@@ -20,7 +20,6 @@ namespace ServerReports
 
         public void OnCheaterReport(ref CheaterReportEvent ev)
         {
-            ev.Allow = false;
             ReferenceHub reportedPlayer = Plugin.GetPlayer(ev.ReportedId);
             ReferenceHub reportedBy = Plugin.GetPlayer(ev.ReportedId);
 
