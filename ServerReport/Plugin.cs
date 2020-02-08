@@ -7,7 +7,7 @@ namespace ServerReports
 {
 	public class Plugin : EXILED.Plugin
 	{
-		public EventHandlers EventHandlers;
+        public EventHandlers EventHandlers;
         public string WebhookURL;
         public string RoleIDsToPing;
         public string CustomMessage;
@@ -20,7 +20,7 @@ namespace ServerReports
                 WebhookURL = Config.GetString("srvreport_webhook", "");
                 RoleIDsToPing = Config.GetString("srvreport_roleids", "");
                 CustomMessage = Config.GetString("srvreport_custom_message", "A new in-game report has been made!");
-
+                
                 EventHandlers = new EventHandlers(this);
                 Events.CheaterReportEvent += EventHandlers.OnCheaterReport;
                 Info($"Report INtegration Loaded");
