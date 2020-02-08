@@ -8,6 +8,7 @@ namespace ServerReports
 	public class Plugin : EXILED.Plugin
 	{
         public EventHandlers EventHandlers;
+        public bool Enabled;
         public string WebhookURL;
         public string RoleIDsToPing;
         public string CustomMessage;
@@ -17,10 +18,16 @@ namespace ServerReports
 		{
 			try
 			{
+                Enabled = Config.GetBool("srvreport_enable", true);
                 WebhookURL = Config.GetString("srvreport_webhook", "");
                 RoleIDsToPing = Config.GetString("srvreport_roleids", "");
                 CustomMessage = Config.GetString("srvreport_custom_message", "A new in-game report has been made!");
                 
+                if (string.IsNullOrWhiteSpace(WebhookURL) || !Enabled)
+                {
+                    Info("There is no WebhookURL set in the config or you have disabled the plugin. Plugin is Disabled.");
+                    return;
+                }
                 EventHandlers = new EventHandlers(this);
                 Events.CheaterReportEvent += EventHandlers.OnCheaterReport;
                 Info($"Report INtegration Loaded");
