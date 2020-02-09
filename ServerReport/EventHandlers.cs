@@ -22,12 +22,7 @@ namespace ServerReports
         {
             string Report = ev.Report;
             bool keywordFound = plugin.ignoreKeywords.Any(s => Report.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0);
-            if (keywordFound)
-            {
-                ev.Allow = true;
-                return;
-            }
-            ev.Allow = false;
+            if (keywordFound) return;
             ReferenceHub reportedPlayer = Plugin.GetPlayer(ev.ReportedId);
             ReferenceHub reportedBy = Plugin.GetPlayer(ev.ReportedId);
 
