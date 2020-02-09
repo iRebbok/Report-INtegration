@@ -20,6 +20,14 @@ namespace ServerReports
 
         public void OnCheaterReport(ref CheaterReportEvent ev)
         {
+            string Report = ev.Report;
+            bool keywordFound = plugin.ignoreKeywords.Any(s => Report.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0);
+            if (keywordFound)
+            {
+                ev.Allow = true;
+                return;
+            }
+            ev.Allow = false;
             ReferenceHub reportedPlayer = Plugin.GetPlayer(ev.ReportedId);
             ReferenceHub reportedBy = Plugin.GetPlayer(ev.ReportedId);
 

@@ -12,6 +12,7 @@ namespace ServerReports
         public string WebhookURL;
         public string RoleIDsToPing;
         public string CustomMessage;
+        public List<string> ignoreKeywords;
 
 		
 		public override void OnEnable()
@@ -22,7 +23,8 @@ namespace ServerReports
                 WebhookURL = Config.GetString("srvreport_webhook", "");
                 RoleIDsToPing = Config.GetString("srvreport_roleids", "");
                 CustomMessage = Config.GetString("srvreport_custom_message", "A new in-game report has been made!");
-                
+                ignoreKeywords = Config.GetStringList("srvreport_ignorekeywords");
+
                 if (string.IsNullOrWhiteSpace(WebhookURL) || !Enabled)
                 {
                     Info("There is no WebhookURL set in the config or you have disabled the plugin. Plugin is Disabled.");
