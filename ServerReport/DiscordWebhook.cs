@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
+using EXILED;
 
 namespace ServerReports
 {
@@ -52,11 +53,11 @@ namespace ServerReports
             var res = _httpClient.PostAsync(_webhookUrl, contentdata).Result;
             if (res.IsSuccessStatusCode)
             {
-                Plugin.Debug("Posted message!");
+                Log.Debug("Posted message!");
             }
             else
             {
-                Plugin.Error(res.Content.ToString());
+                Log.Error(res.Content.ToString());
             }
         }
     }

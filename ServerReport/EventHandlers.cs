@@ -2,12 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EXILED;
-using Grenades;
-using MEC;
-using Mirror;
-using UnityEngine;
-using UnityEngine.Networking;
-using System.Net.Http;
+using EXILED.Extensions;
+
 
 namespace ServerReports
 {
@@ -23,8 +19,14 @@ namespace ServerReports
             string Report = ev.Report;
             bool keywordFound = plugin.ignoreKeywords.Any(s => Report.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0);
             if (keywordFound) return;
-            ReferenceHub reportedPlayer = Plugin.GetPlayer(ev.ReportedId);
-            ReferenceHub reportedBy = Plugin.GetPlayer(ev.ReportedId);
+            ReferenceHub reportedPlayer = Player.GetPlayer(ev.ReportedId);
+            ReferenceHub reportedBy = Player.GetPlayer(ev.ReporterId);
+
+            if (reportedPlayer.characterClassManager.UserId == reportedBy.characterClassManager.UserId)
+            {
+                Extensions.Broadcast(reportedBy, 5, "You can't report yourself.");
+                return;
+            }
 
             Webhook webhk = new Webhook(plugin.WebhookURL);
 
@@ -33,22 +35,22 @@ namespace ServerReports
 
             EmbedField reporterName = new EmbedField();
             reporterName.Name = "Report By";
-            reporterName.Value = Plugin.GetPlayer(ev.ReporterId).nicknameSync.MyNick;
+            reporterName.Value = reportedBy.nicknameSync.MyNick + " " + reportedBy.characterClassManager.UserId;
             reporterName.Inline = true;
 
             EmbedField reporterUserID = new EmbedField();
             reporterUserID.Name = "Reporter UserID";
-            reporterUserID.Value = Plugin.GetPlayer(ev.ReporterId).characterClassManager.UserId;
+            reporterUserID.Value = reportedPlayer.characterClassManager.UserId;
             reporterUserID.Inline = true;
 
             EmbedField reportedName = new EmbedField();
             reportedName.Name = "Reported Player";
-            reportedName.Value = Plugin.GetPlayer(ev.ReportedId).nicknameSync.MyNick;
+            reportedName.Value = reportedPlayer.nicknameSync.MyNick;
             reportedName.Inline = true;
 
             EmbedField reportedUserID = new EmbedField();
             reportedUserID.Name = "Reported Player";
-            reportedUserID.Value = Plugin.GetPlayer(ev.ReportedId).characterClassManager.UserId;
+            reportedUserID.Value = reportedPlayer.characterClassManager.UserId;
             reportedUserID.Inline = true;
 
             EmbedField Reason = new EmbedField();
@@ -80,9 +82,10 @@ namespace ServerReports
                     string[] split = plugin.RoleIDsToPing.Split(',');
                     foreach (string roleid in split)
                     {
-                        pingPongRoles += $"<@&{roleid}> ";
+                        pingPongRoles += $"<@&{roleid.Trim()}> ";
                     }
                     webhk.Send(pingPongRoles + "" + plugin.CustomMessage, null, null, false, embeds: listEmbed);
+                    pingPongRoles = "";
                 }
             }
         }

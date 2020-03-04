@@ -120,6 +120,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
     <Compile Include="DiscordWebhook.cs" />
     <Compile Include="Embed.cs" />
     <Compile Include="EventHandlers.cs" />

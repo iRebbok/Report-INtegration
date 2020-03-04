@@ -27,16 +27,16 @@ namespace ServerReports
 
                 if (string.IsNullOrWhiteSpace(WebhookURL) || !Enabled)
                 {
-                    Info("There is no WebhookURL set in the config or you have disabled the plugin. Plugin is Disabled.");
+                    Log.Warn("There is no WebhookURL set in the config or you have disabled the plugin. Plugin is Disabled.");
                     return;
                 }
                 EventHandlers = new EventHandlers(this);
                 Events.CheaterReportEvent += EventHandlers.OnCheaterReport;
-                Info($"Report INtegration Loaded");
+                Log.Info($"Report INtegration Loaded");
 			}
 			catch (Exception e)
 			{
-				Error($"There was an error loading the plugin: {e}");
+                Log.Error($"There was an error loading the plugin: {e}");
 			}
 		}
 
