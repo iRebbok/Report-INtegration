@@ -11,7 +11,7 @@
 - srvreport_ignorekeywords: hack,cheat,noclip,fly,instakill,oneshot
 
 # Explanation
-- srvreport_enable Enables/Disbles plugin.
+- srvreport_enable Enables/Disables plugin.
 - srvreport_webhook is the webhook URL from a discord channel.
 - srvreport_roleids is the ID of a discord role. Used to ping a role. Leave empty if you dont want a ping.
 - srvreport_custom_message is the message the plugin will post in the channel. 
