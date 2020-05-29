@@ -19,6 +19,9 @@ namespace ServerReports
 
         public void OnCheaterReport(ref CheaterReportEvent ev)
         {
+            // Verification is performed based on the following report,
+            // because webhook can remain functional
+            // after the message sending state fails
             if (plugin.webhook.Status == WebhookStatus.NOT_EXISTING)
             {
                 Log.Debug("Webhook broken, disabling plugin...");
@@ -66,6 +69,7 @@ namespace ServerReports
                     mentionBuilder.Roles.Add(snowflake);
 
                 _cache = mentionBuilder.Build();
+                _cacheHashcode = plugin.roleIDsToPing.GetHashCode() + plugin.customMessage.GetHashCode();
             }
 
             // a null value won't break anything
