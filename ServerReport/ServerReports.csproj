@@ -58,8 +58,8 @@
         <InputAssemblies Include="DSharp4Webhook.dll" />
         <InputAssemblies Include="Newtonsoft.Json.dll" />
     </ItemGroup>
-	<Move SourceFiles="$(TargetPath)" DestinationFiles="$(TargetPath).dll" />
-    <Exec Command="$(ILMergeConsolePath) /out:&quot;$(TargetPath)&quot; &quot;$(TargetPath).dll&quot; &quot;Libs\DSharp4Webhook.dll&quot; &quot;Libs\Newtonsoft.Json.dll&quot;" />
+	<Move SourceFiles="$(TargetPath)" DestinationFiles="$(TargetPath).unmerged.dll" />
+    <Exec Command="$(ILMergeConsolePath) /out:&quot;$(TargetPath)&quot; &quot;$(TargetPath).unmerged.dll&quot; &quot;Libs\DSharp4Webhook.dll&quot; &quot;Libs\Newtonsoft.Json.dll&quot;" />
   </Target>
   
 </Project>
