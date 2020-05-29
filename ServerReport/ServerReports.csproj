@@ -70,8 +70,8 @@
   </ItemGroup>
 
   <Target Name="ILMerge" AfterTargets="Build">
-	<Move SourceFiles="$(TargetPath)" DestinationFiles="$(TargetPath).dll" />
-    <Exec Command="$(ILMergeConsolePath) /out:$(TargetPath) $(TargetPath).dll Libs\DSharp4Webhook.dll" />
+	  <Move SourceFiles="$(TargetPath)" DestinationFiles="$(TargetPath).unmerged.dll" />
+    <Exec Command="$(ILMergeConsolePath) /out:&quot;$(TargetPath)&quot; &quot;$(TargetPath).unmerged.dll&quot; &quot;Libs\DSharp4Webhook.dll&quot;" />
   </Target>
-  
+
 </Project>
