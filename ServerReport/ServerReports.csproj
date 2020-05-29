@@ -44,6 +44,9 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>Libs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
+    <Reference Include="DSharp4Webhook">
+      <HintPath>Libs\DSharp4Webhook.dll</HintPath>
+    </Reference>
     <Reference Include="EXILED">
       <HintPath>Libs\EXILED.dll</HintPath>
     </Reference>
@@ -58,6 +61,10 @@
     </Reference>
     <Reference Include="Mirror">
       <HintPath>Libs\Mirror.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -80,15 +87,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
-    <Compile Include="DiscordWebhook.cs" />
-    <Compile Include="Embed.cs" />
-    <Compile Include="EventHandlers.cs" />
-    <Compile Include="Plugin.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WebhookHelper.cs" />
+    <Compile Include="EventHandler.cs" />
+    <Compile Include="ReportINtegration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Libs\" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Libs\DSharp4Webhook.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Libs\Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
