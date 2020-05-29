@@ -1,9 +1,7 @@
 using EXILED;
 using EXILED.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-
 
 namespace ServerReports
 {
@@ -27,6 +25,8 @@ namespace ServerReports
                 Extensions.Broadcast(reportedBy, 5, "You can't report yourself.");
                 return;
             }
+
+            /*
 
             Webhook webhk = new Webhook(plugin.WebhookURL);
 
@@ -88,6 +88,8 @@ namespace ServerReports
                     pingPongRoles = "";
                 }
             }
+            
+             */
         }
     }
 }

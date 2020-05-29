@@ -2,7 +2,6 @@ using EXILED;
 using System;
 using System.Collections.Generic;
 
-
 namespace ServerReports
 {
     public class Plugin : EXILED.Plugin
