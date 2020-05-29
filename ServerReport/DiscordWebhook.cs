@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using EXILED;
+using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
-using EXILED;
 
 namespace ServerReports
 {
@@ -47,7 +45,7 @@ namespace ServerReports
             {
                 Embeds.AddRange(embeds);
             }
-           
+
             var contentdata = new StringContent(JsonConvert.SerializeObject(this), Encoding.UTF8, "application/json");
 
             var res = _httpClient.PostAsync(_webhookUrl, contentdata).Result;

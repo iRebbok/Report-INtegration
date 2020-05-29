@@ -1,12 +1,12 @@
+using EXILED;
 using System;
 using System.Collections.Generic;
-using EXILED;
 
 
 namespace ServerReports
 {
-	public class Plugin : EXILED.Plugin
-	{
+    public class Plugin : EXILED.Plugin
+    {
         public EventHandlers EventHandlers;
         public bool Enabled;
         public string WebhookURL;
@@ -14,11 +14,11 @@ namespace ServerReports
         public string CustomMessage;
         public List<string> ignoreKeywords;
 
-		
-		public override void OnEnable()
-		{
-			try
-			{
+
+        public override void OnEnable()
+        {
+            try
+            {
                 Enabled = Config.GetBool("srvreport_enable", true);
                 WebhookURL = Config.GetString("srvreport_webhook", "");
                 RoleIDsToPing = Config.GetString("srvreport_roleids", "");
@@ -33,24 +33,24 @@ namespace ServerReports
                 EventHandlers = new EventHandlers(this);
                 Events.CheaterReportEvent += EventHandlers.OnCheaterReport;
                 Log.Info($"Report INtegration Loaded");
-			}
-			catch (Exception e)
-			{
+            }
+            catch (Exception e)
+            {
                 Log.Error($"There was an error loading the plugin: {e}");
-			}
-		}
+            }
+        }
 
         public override void OnDisable()
-		{
+        {
             Events.CheaterReportEvent -= EventHandlers.OnCheaterReport;
             EventHandlers = null;
-		}
+        }
 
-		public override void OnReload()
-		{
+        public override void OnReload()
+        {
             //haha no
-		}
+        }
 
-		public override string getName { get; } = "Server Reports to Discord";
-	}
+        public override string getName { get; } = "Server Reports to Discord";
+    }
 }

@@ -1,8 +1,8 @@
+using EXILED;
+using EXILED.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EXILED;
-using EXILED.Extensions;
 
 
 namespace ServerReports
@@ -31,7 +31,7 @@ namespace ServerReports
             Webhook webhk = new Webhook(plugin.WebhookURL);
 
             List<Embed> listEmbed = new List<Embed>();
-          
+
 
             EmbedField reporterName = new EmbedField();
             reporterName.Name = "Report By";
@@ -65,11 +65,11 @@ namespace ServerReports
             embed.Fields.Add(reportedName);
             embed.Fields.Add(reportedUserID);
             embed.Fields.Add(Reason);
-            
+
 
             listEmbed.Add(embed);
 
-           
+
             if (string.IsNullOrWhiteSpace(plugin.RoleIDsToPing)) webhk.Send(plugin.CustomMessage, null, null, false, embeds: listEmbed);
             else
             {
