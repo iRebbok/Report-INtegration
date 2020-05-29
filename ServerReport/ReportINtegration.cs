@@ -2,7 +2,10 @@ using DSharp4Webhook.Action;
 using DSharp4Webhook.Action.Rest;
 using DSharp4Webhook.Core;
 using EXILED;
+using ServerReports.Properties;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ServerReports
 {
@@ -21,6 +24,8 @@ namespace ServerReports
 
         public override void OnEnable()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
+
             enabled = Config.GetBool("srvreport_enable", true);
             roleIDsToPing = Config.GetString("srvreport_roleids", string.Empty);
             webhookURL = Config.GetString("srvreport_webhook", string.Empty);
@@ -54,10 +59,22 @@ namespace ServerReports
 
         public override void OnDisable()
         {
+            AppDomain.CurrentDomain.AssemblyResolve -= OnResolveAssembly;
             Events.CheaterReportEvent -= eventHandler.OnCheaterReport;
             webhook?.Dispose();
         }
 
         public override void OnReload() { }
+
+        public Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
+        {
+            Log.Debug($"Attempt to solve the dependency by name: {args.Name}");
+
+            if (args.Name.StartsWith("Newtonsoft.Json"))
+                return Assembly.Load(Resources.Newtonsoft_Json);
+
+            Log.Debug("The dependency could not be resolved");
+            return null;
+        }
     }
 }
