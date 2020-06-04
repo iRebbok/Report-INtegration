@@ -1,6 +1,5 @@
 ﻿using DSharp4Webhook.Core;
 using DSharp4Webhook.Core.Constructor;
-using EXILED;
 using System;
 
 namespace ServerReports
@@ -20,7 +19,7 @@ namespace ServerReports
             mentionBuilder = ConstructorProvider.GetMentionBuilder();
         }
 
-        public static MessageBuilder PrepareMessage(LocalReportEvent report, ReferenceHub issuer, ReferenceHub target)
+        public static MessageBuilder PrepareMessage(string prefix, string reason, ReferenceHub issuer, ReferenceHub target)
         {
             // clearing past data
             // this is necessary to avoid duplicating the old report
@@ -39,10 +38,10 @@ namespace ServerReports
             embedBuilder.AddField(fieldBuilder.Build());
 
             fieldBuilder.Name = "Report Reason";
-            fieldBuilder.Value = report.Reason;
+            fieldBuilder.Value = reason;
             embedBuilder.AddField(fieldBuilder.Build());
 
-            embedBuilder.Title = "New In-game Report";
+            embedBuilder.Title = $"New In-game Report: {prefix}";
             // report time in UTC
             embedBuilder.Timestamp = DateTimeOffset.UtcNow;
 

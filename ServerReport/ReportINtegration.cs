@@ -42,6 +42,7 @@ namespace ServerReports
             webhook = WebhookProvider.CreateStaticWebhook(webhookURL);
             eventHandler = new EventHandler(this);
             Events.LocalReportEvent += eventHandler.OnLocalReport;
+            Events.CheaterReportEvent += eventHandler.OnCheaterReport;
             Log.Info("Report INtegration Loaded");
             webhook.GetInfo().Queue((IResult result, bool isSuccessfully) =>
             {
@@ -61,6 +62,7 @@ namespace ServerReports
         {
             AppDomain.CurrentDomain.AssemblyResolve -= OnResolveAssembly;
             Events.LocalReportEvent -= eventHandler.OnLocalReport;
+            Events.CheaterReportEvent -= eventHandler.OnCheaterReport;
             webhook?.Dispose();
         }
 
