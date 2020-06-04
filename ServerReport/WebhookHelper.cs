@@ -20,7 +20,7 @@ namespace ServerReports
             mentionBuilder = ConstructorProvider.GetMentionBuilder();
         }
 
-        public static MessageBuilder PrepareMessage(CheaterReportEvent report, ReferenceHub issuer, ReferenceHub target)
+        public static MessageBuilder PrepareMessage(LocalReportEvent report, ReferenceHub issuer, ReferenceHub target)
         {
             // clearing past data
             // this is necessary to avoid duplicating the old report
@@ -45,7 +45,7 @@ namespace ServerReports
             embedBuilder.AddField(fieldBuilder.Build());
 
             fieldBuilder.Name = "Report Reason";
-            fieldBuilder.Value = report.Report;
+            fieldBuilder.Value = report.Reason;
             embedBuilder.AddField(fieldBuilder.Build());
 
             embedBuilder.Title = "New In-game Report";

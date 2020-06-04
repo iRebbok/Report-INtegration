@@ -17,7 +17,7 @@ namespace ServerReports
         public EventHandler(ReportINtegration plugin) =>
             this.plugin = plugin;
 
-        public void OnCheaterReport(ref CheaterReportEvent ev)
+        public void OnLocalReport(LocalReportEvent ev)
         {
             // Verification is performed based on the following report,
             // because webhook can remain functional
@@ -31,31 +31,25 @@ namespace ServerReports
 
             // Don't send if it's a debug build
 #if DEBUG
-            Log.Debug($"Report intercepted:\nIssuerId: {ev.ReporterId}\nTargetId: {ev.ReportedId}\nServerId: {ev.ServerId}\nReport: {ev.Report}");
+            Log.Debug($"Report intercepted:\nIssuerId: {ev.Issuer.queryProcessor.PlayerId}\nTargetId: {ev.Target.queryProcessor.PlayerId}\nReport: {ev.Reason}");
             ev.Allow = false;
 #endif
 
-            string reportText = ev.Report;
-
-            if (plugin.ignoreKeywords.Any(s => reportText.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) != -1))
+             if (plugin.ignoreKeywords.Any(s => ev.Reason.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) != -1))
                 return;
 
-            var issuer = Player.GetPlayer(ev.ReporterId);
-
-            // Skip it if it is debug
+             // Skip it if it is debug
             // Required for testing
 #if !DEBUG
             // Comparing ids before getting second referenceHub
-            if (ev.ReporterId == ev.ReportedId)
+            if (ev.Issuer == ev.Target)
             {
-                issuer.Broadcast(5, "You can't report yourself.", false);
+                ev.Issuer.Broadcast(5, "You can't report yourself.", false);
                 return;
             }
 #endif
 
-            var target = Player.GetPlayer(ev.ReportedId);
-
-            var messageBuilder = WebhookHelper.PrepareMessage(ev, issuer, target);
+            var messageBuilder = WebhookHelper.PrepareMessage(ev, ev.Issuer, ev.Target);
 
             if ((plugin.roleIDsToPing.GetHashCode() + plugin.customMessage.GetHashCode()) != _cacheHashcode &&
                 !string.IsNullOrWhiteSpace(plugin.roleIDsToPing))

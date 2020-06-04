@@ -41,7 +41,7 @@ namespace ServerReports
             // an exception is thrown here if the url is incorrect
             webhook = WebhookProvider.CreateStaticWebhook(webhookURL);
             eventHandler = new EventHandler(this);
-            Events.CheaterReportEvent += eventHandler.OnCheaterReport;
+            Events.LocalReportEvent += eventHandler.OnLocalReport;
             Log.Info("Report INtegration Loaded");
             webhook.GetInfo().Queue((IResult result, bool isSuccessfully) =>
             {
@@ -60,7 +60,7 @@ namespace ServerReports
         public override void OnDisable()
         {
             AppDomain.CurrentDomain.AssemblyResolve -= OnResolveAssembly;
-            Events.CheaterReportEvent -= eventHandler.OnCheaterReport;
+            Events.LocalReportEvent -= eventHandler.OnLocalReport;
             webhook?.Dispose();
         }
 
