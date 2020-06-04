@@ -30,18 +30,12 @@ namespace ServerReports
 
             fieldBuilder.Inline = true;
 
-            fieldBuilder.Name = "Report By";
+            fieldBuilder.Name = "Issuer";
             fieldBuilder.Value = $"{issuer.nicknameSync.MyNick} {issuer.characterClassManager.UserId}";
             embedBuilder.AddField(fieldBuilder.Build());
 
-            fieldBuilder.Name = "Reported UserID";
-            fieldBuilder.Value = target.characterClassManager.UserId;
-            embedBuilder.AddField(fieldBuilder.Build());
-
-            fieldBuilder.Name = "Reported Player";
-            fieldBuilder.Value = target.nicknameSync.MyNick;
-            embedBuilder.AddField(fieldBuilder.Build());
-            fieldBuilder.Value = target.characterClassManager.UserId;
+            fieldBuilder.Name = "Target";
+            fieldBuilder.Value = $"{target.nicknameSync.MyNick} {target.characterClassManager.UserId}";
             embedBuilder.AddField(fieldBuilder.Build());
 
             fieldBuilder.Name = "Report Reason";
