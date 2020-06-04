@@ -21,9 +21,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="DSharp4Webhook">
-      <HintPath>Libs\DSharp4Webhook.dll</HintPath>
-    </Reference>
     <Reference Include="EXILED">
       <HintPath>Libs\EXILED.dll</HintPath>
     </Reference>
@@ -40,6 +37,7 @@
       <HintPath>Libs\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Libs\**" />
     <EmbeddedResource Remove="Libs\**" />
@@ -52,7 +50,9 @@
   <ItemGroup>
     <None Include="Libs\Newtonsoft.Json.dll" />
   </ItemGroup>
+
   <ItemGroup>
+    <PackageReference Include="DSharp4Webhook" Version="2.0.1" />
     <PackageReference Include="ILMerge" Version="3.0.40" />
   </ItemGroup>
   <ItemGroup>
@@ -70,8 +70,8 @@
   </ItemGroup>
 
   <Target Name="ILMerge" AfterTargets="Build">
-	  <Move SourceFiles="$(TargetPath)" DestinationFiles="$(TargetPath).unmerged.dll" />
-    <Exec Command="$(ILMergeConsolePath) /out:&quot;$(TargetPath)&quot; &quot;$(TargetPath).unmerged.dll&quot; Libs\DSharp4Webhook.dll" />
+      <Move SourceFiles="$(TargetPath)" DestinationFiles="$(OutputPath)\$(AssemblyName)-unmerged.dll" />
+      <Exec Command="$(ILMergeConsolePath) /out:&quot;$(TargetPath)&quot; &quot;$(OutputPath)\$(AssemblyName)-unmerged.dll&quot; &quot;$(OutputPath)\DSharp4Webhook.dll&quot;" />
   </Target>
 
 </Project>
