@@ -58,7 +58,8 @@ namespace ServerReports
             // Comparing ids before getting second referenceHub
             if (issuer == target)
             {
-                issuer.Broadcast(5, "You can't report yourself.", false);
+                //issuer.Broadcast(5, "You can't report yourself.", false);
+                PlayerManager.localPlayer.GetComponent<Broadcast>().TargetAddElement(issuer.queryProcessor.connectionToClient, "You can't report yourself", 5, Broadcast.BroadcastFlags.Normal);
                 return;
             }
 #endif
