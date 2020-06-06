@@ -12,7 +12,8 @@ namespace ServerReports
         public ReportINtegration plugin;
         // cache to prevent creating new objects if nothing has changed
         private int _cacheHashcode;
-        private IMessageMention _cache;
+        private IMessageMention _mentionCache;
+        private string _textCache;
 
         public EventHandler(ReportINtegration plugin) =>
             this.plugin = plugin;
@@ -70,19 +71,19 @@ namespace ServerReports
                 !string.IsNullOrWhiteSpace(plugin.roleIDsToPing))
             {
                 var snowflakes = plugin.roleIDsToPing.Split(',').Select(sf => sf.Trim());
-                messageBuilder.AppendLine(string.Join(" ", snowflakes.Select(sf => $"<@&{sf}>")));
-                messageBuilder.Append(plugin.customMessage);
 
                 var mentionBuilder = WebhookHelper.GetMentionBuilder();
                 foreach (var snowflake in snowflakes)
                     mentionBuilder.Roles.Add(snowflake);
 
-                _cache = mentionBuilder.Build();
+                _mentionCache = mentionBuilder.Build();
+                _textCache = $"{string.Join(" ", snowflakes.Select(sf => $" <@&{ sf}> "))}\n{plugin.customMessage}";
                 _cacheHashcode = plugin.roleIDsToPing.GetHashCode() + plugin.customMessage.GetHashCode();
             }
 
             // a null value won't break anything
-            messageBuilder.MessageMention = _cache;
+            messageBuilder.MessageMention = _mentionCache;
+            messageBuilder.Append(_textCache);
 
             plugin.webhook.SendMessage(messageBuilder.Build()).Queue((IResult result, bool isSuccessful) =>
             {
